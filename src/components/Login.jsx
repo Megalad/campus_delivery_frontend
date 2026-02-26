@@ -13,7 +13,7 @@ const Login = ({ onSwitch, onLoginSuccess }) => {
     };
 
     try {
-      const response = await fetch('https://my-server-1.eastasia.cloudapp.azure.com/api/auth/login', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(loginData)

@@ -10,12 +10,12 @@ const VendorDashboard = ({ user }) => {
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
-        const shopRes = await fetch(`https://my-server-1.eastasia.cloudapp.azure.com/api/vendors/my-shop/${user._id || user.id}`);
+        const shopRes = await fetch(`${import.meta.env.VITE_API_URL}/api/vendors/my-shop/${user._id || user.id}`);
         const shopData = await shopRes.json();
         setShop(shopData);
 
         if (shopData._id) {
-          const ordersRes = await fetch(`https://my-server-1.eastasia.cloudapp.azure.com/api/orders/vendor/${shopData._id}`);
+          const ordersRes = await fetch(`${import.meta.env.VITE_API_URL}/api/orders/vendor/${shopData._id}`);
           if (ordersRes.ok) {
             const ordersData = await ordersRes.json();
             setOrders(ordersData);
@@ -30,7 +30,7 @@ const VendorDashboard = ({ user }) => {
 
   const updateOrderStatus = async (orderId, newStatus) => {
     try {
-      const response = await fetch(`https://my-server-1.eastasia.cloudapp.azure.com/api/orders/${orderId}/status`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/orders/${orderId}/status`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: newStatus }),
@@ -46,7 +46,7 @@ const VendorDashboard = ({ user }) => {
 
   const toggleShopStatus = async () => {
     try {
-      const response = await fetch(`https://my-server-1.eastasia.cloudapp.azure.com/api/vendors/${shop._id}/toggle-status`, { method: 'PUT' });
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/vendors/${shop._id}/toggle-status`, { method: 'PUT' });
       if (response.ok) {
         const updatedShop = await response.json();
         setShop(updatedShop); 
@@ -177,8 +177,8 @@ const VendorDashboard = ({ user }) => {
                   {order.paymentMethod === 'PromptPay' && order.paymentSlip && (
                     <div className="mt-3">
                       <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-2">Transfer Slip</span>
-                      <a href={`https://my-server-1.eastasia.cloudapp.azure.com${order.paymentSlip}`} target="_blank" rel="noreferrer">
-                        <img src={`https://my-server-1.eastasia.cloudapp.azure.com${order.paymentSlip}`} alt="Slip" className="w-full h-32 object-cover rounded-lg border border-slate-200 hover:opacity-80 transition-opacity cursor-pointer" />
+                      <a href={`${import.meta.env.VITE_API_URL}${order.paymentSlip}`} target="_blank" rel="noreferrer">
+                        <img src={`${import.meta.env.VITE_API_URL}${order.paymentSlip}`} alt="Slip" className="w-full h-32 object-cover rounded-lg border border-slate-200 hover:opacity-80 transition-opacity cursor-pointer" />
                       </a>
                     </div>
                   )}

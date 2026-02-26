@@ -14,7 +14,7 @@ const CustomerOrders = () => {
     const fetchMyOrders = async () => {
       if (!customerId) return;
       try {
-        const response = await fetch(`https://my-server-1.eastasia.cloudapp.azure.com/api/orders/customer/${customerId}`);
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/orders/customer/${customerId}`);
         if (response.ok) {
           const data = await response.json();
           setOrders(data);
@@ -115,7 +115,7 @@ const CustomerOrders = () => {
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-100 pb-4 mb-4 gap-4">
                   <div className="flex items-center gap-4">
                     <img 
-                      src={order.vendorId?.image ? `https://my-server-1.eastasia.cloudapp.azure.com${order.vendorId.image}` : 'https://via.placeholder.com/50'} 
+                      src={order.vendorId?.image ? `${import.meta.env.VITE_API_URL}${order.vendorId.image}` : 'https://via.placeholder.com/50'} 
                       alt="Shop" 
                       className="w-14 h-14 rounded-full object-cover border border-slate-100"
                     />
