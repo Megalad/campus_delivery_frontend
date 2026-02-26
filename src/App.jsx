@@ -164,7 +164,7 @@ function App() {
     const verifyVendorShop = async () => {
       if (user?.role === 'Vendor') {
         try {
-          const response = await fetch(`http://localhost:5001/api/vendors/my-shop/${user._id || user.id}`);
+          const response = await fetch(`https://my-server-1.eastasia.cloudapp.azure.com/api/vendors/my-shop/${user._id || user.id}`);
           if (response.ok) {
             setHasShop(true);
           } else {
