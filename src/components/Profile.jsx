@@ -49,7 +49,7 @@ const Profile = ({ user, setUser }) => {
     setMessage('');
     
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}api/auth/profile/${userId}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/profile/${userId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
