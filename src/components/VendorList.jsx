@@ -10,7 +10,7 @@ const VendorList = () => {
   useEffect(() => {
     const fetchVendors = async () => {
       try {
-        const response = await fetch(`http://localhost:5001/api/vendors/location/${locationId}`);
+        const response = await fetch(`https://my-server-1.eastasia.cloudapp.azure.com/api/vendors/location/${locationId}`);
         if (response.ok) {
           const data = await response.json();
           setVendors(data);
@@ -70,7 +70,7 @@ const VendorList = () => {
                 {/* Image Section */}
                 <div className="h-48 bg-slate-200 overflow-hidden relative">
                   <img 
-                    src={vendor.image ? `http://localhost:5001${vendor.image}` : 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=600&q=80'} 
+                    src={vendor.image ? `https://my-server-1.eastasia.cloudapp.azure.com${vendor.image}` : 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=600&q=80'} 
                     alt={vendor.shopName}
                     className={`w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ${!vendor.isOpen ? 'grayscale' : ''}`}
                     onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=600&q=80' }}

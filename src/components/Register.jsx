@@ -8,7 +8,7 @@ const Register = ({ onSwitch }) => {
   useEffect(() => {
     const fetchLocations = async () => {
       try {
-        const response = await fetch('http://localhost:5001/api/locations');
+        const response = await fetch('https://my-server-1.eastasia.cloudapp.azure.com/api/locations');
         if (response.ok) {
           const data = await response.json();
           setDbLocations(data);
@@ -35,7 +35,7 @@ const Register = ({ onSwitch }) => {
     console.log("SENDING:", userData);
 
     try {
-      const response = await fetch('http://localhost:5001/api/auth/register', {
+      const response = await fetch('https://my-server-1.eastasia.cloudapp.azure.com/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(userData)

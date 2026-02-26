@@ -19,11 +19,11 @@ const CustomerMenu = () => {
   useEffect(() => {
     const fetchMenuData = async () => {
       try {
-        const vendorRes = await fetch(`http://localhost:5001/api/vendors/${vendorId}`);
+        const vendorRes = await fetch(`https://my-server-1.eastasia.cloudapp.azure.com/api/vendors/${vendorId}`);
         const vendorData = await vendorRes.json();
         setVendor(vendorData);
 
-        const itemsRes = await fetch(`http://localhost:5001/api/items/vendor/${vendorId}`);
+        const itemsRes = await fetch(`https://my-server-1.eastasia.cloudapp.azure.com/api/items/vendor/${vendorId}`);
         const itemsData = await itemsRes.json();
         setItems(itemsData);
       } catch (err) {
@@ -98,7 +98,7 @@ const CustomerMenu = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:5001/api/orders/create', {
+      const response = await fetch('https://my-server-1.eastasia.cloudapp.azure.com/api/orders/create', {
         method: 'POST',
         body: formData, 
       });
@@ -127,7 +127,7 @@ const CustomerMenu = () => {
 
         <div className="bg-white rounded-[3rem] shadow-sm overflow-hidden border border-slate-100 mb-6">
           <div className="h-64 bg-slate-200 relative">
-            <img src={vendor.image ? `http://localhost:5001${vendor.image}` : 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5'} alt={vendor.shopName} className="w-full h-full object-cover" />
+            <img src={vendor.image ? `https://my-server-1.eastasia.cloudapp.azure.com${vendor.image}` : 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5'} alt={vendor.shopName} className="w-full h-full object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent"></div>
             <div className="absolute bottom-8 left-8 text-white">
               <span className="bg-orange-500 text-white px-3 py-1 rounded-full text-xs font-black uppercase tracking-widest mb-3 inline-block">{vendor.locationId}</span>
@@ -155,7 +155,7 @@ const CustomerMenu = () => {
             const qty = getItemQuantity(item._id);
             return (
               <div key={item._id} className={`bg-white p-4 rounded-3xl shadow-sm border transition-all flex items-center gap-6 ${qty > 0 ? 'border-orange-500 shadow-orange-100' : 'border-slate-100 hover:shadow-md'} ${!vendor.isOpen ? 'opacity-70 grayscale-[30%]' : ''}`}>
-                <img src={item.image ? `http://localhost:5001${item.image}` : 'https://via.placeholder.com/150'} alt={item.name} className="w-28 h-28 rounded-2xl object-cover" />
+                <img src={item.image ? `https://my-server-1.eastasia.cloudapp.azure.com${item.image}` : 'https://via.placeholder.com/150'} alt={item.name} className="w-28 h-28 rounded-2xl object-cover" />
                 <div className="flex-grow">
                   <div className="flex justify-between items-start">
                     <h3 className="text-xl font-bold text-slate-900">{item.name}</h3>

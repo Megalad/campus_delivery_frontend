@@ -15,7 +15,7 @@ const AdminDashboard = () => {
 
   const fetchStats = async () => {
     try {
-      const response = await fetch('http://localhost:5001/api/admin/stats');
+      const response = await fetch('https://my-server-1.eastasia.cloudapp.azure.com/api/admin/stats');
       const data = await response.json();
       setStats(data);
     } catch (err) {
@@ -25,13 +25,13 @@ const AdminDashboard = () => {
 
   const fetchManagementData = async () => {
     try {
-      const userRes = await fetch('http://localhost:5001/api/admin/users');
+      const userRes = await fetch('https://my-server-1.eastasia.cloudapp.azure.com/api/admin/users');
       setUsers(await userRes.json());
       
-      const vendorRes = await fetch('http://localhost:5001/api/admin/vendors');
+      const vendorRes = await fetch('https://my-server-1.eastasia.cloudapp.azure.com/api/admin/vendors');
       setVendors(await vendorRes.json());
 
-      const locRes = await fetch('http://localhost:5001/api/locations');
+      const locRes = await fetch('https://my-server-1.eastasia.cloudapp.azure.com/api/locations');
       if (locRes.ok) setLocations(await locRes.json());
     } catch (err) {
       console.error("Management Fetch Error:", err);
@@ -54,7 +54,7 @@ const AdminDashboard = () => {
   const handleForceCancelOrder = async (orderId) => {
     if (!window.confirm("Are you sure you want to FORCE CANCEL this order?")) return;
     try {
-      const response = await fetch(`http://localhost:5001/api/orders/${orderId}/status`, {
+      const response = await fetch(`https://my-server-1.eastasia.cloudapp.azure.com/api/orders/${orderId}/status`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: 'cancelled' }),
@@ -68,7 +68,7 @@ const AdminDashboard = () => {
   const handleDeleteUser = async (userId) => {
     if (!window.confirm("Are you sure you want to permanently delete this user?")) return;
     try {
-      const response = await fetch(`http://localhost:5001/api/admin/users/${userId}`, { method: 'DELETE' });
+      const response = await fetch(`https://my-server-1.eastasia.cloudapp.azure.com/api/admin/users/${userId}`, { method: 'DELETE' });
       if (response.ok) fetchManagementData(); 
     } catch (err) {
       console.error("Error deleting user:", err);
@@ -78,7 +78,7 @@ const AdminDashboard = () => {
   const handleDeleteVendor = async (vendorId) => {
     if (!window.confirm("WARNING: This will delete the shop and all its menu items. Continue?")) return;
     try {
-      const response = await fetch(`http://localhost:5001/api/admin/vendors/${vendorId}`, { method: 'DELETE' });
+      const response = await fetch(`https://my-server-1.eastasia.cloudapp.azure.com/api/admin/vendors/${vendorId}`, { method: 'DELETE' });
       if (response.ok) fetchManagementData(); 
     } catch (err) {
       console.error("Error deleting vendor:", err);
@@ -88,7 +88,7 @@ const AdminDashboard = () => {
     e.preventDefault();
     if (!newLocation.trim()) return;
     try {
-      const response = await fetch('http://localhost:5001/api/locations', {
+      const response = await fetch('https://my-server-1.eastasia.cloudapp.azure.com/api/locations', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ locationName: newLocation.trim() })
@@ -105,7 +105,7 @@ const AdminDashboard = () => {
   const handleDeleteLocation = async (id) => {
     if (!window.confirm("Are you sure you want to delete this campus location?")) return;
     try {
-      const response = await fetch(`http://localhost:5001/api/locations/${id}`, { method: 'DELETE' });
+      const response = await fetch(`https://my-server-1.eastasia.cloudapp.azure.com/api/locations/${id}`, { method: 'DELETE' });
       if (response.ok) fetchManagementData();
     } catch (err) {
       console.error("Error deleting location:", err);

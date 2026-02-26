@@ -12,12 +12,12 @@ const VendorMenu = ({ user }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const shopRes = await fetch(`http://localhost:5001/api/vendors/my-shop/${user._id || user.id}`);
+        const shopRes = await fetch(`https://my-server-1.eastasia.cloudapp.azure.com/api/vendors/my-shop/${user._id || user.id}`);
         const shopData = await shopRes.json();
         setShop(shopData);
 
         if (shopData._id) {
-          const itemsRes = await fetch(`http://localhost:5001/api/items/vendor/${shopData._id}`);
+          const itemsRes = await fetch(`https://my-server-1.eastasia.cloudapp.azure.com/api/items/vendor/${shopData._id}`);
           if (itemsRes.ok) {
             const itemsData = await itemsRes.json();
             setItems(itemsData);
@@ -54,8 +54,8 @@ const VendorMenu = ({ user }) => {
 
     try {
       const url = editingItem 
-        ? `http://localhost:5001/api/items/edit/${editingItem._id}`
-        : 'http://localhost:5001/api/items/add';
+        ? `https://my-server-1.eastasia.cloudapp.azure.com/api/items/edit/${editingItem._id}`
+        : 'https://my-server-1.eastasia.cloudapp.azure.com/api/items/add';
       
       const method = editingItem ? 'PUT' : 'POST';
 
@@ -85,7 +85,7 @@ const VendorMenu = ({ user }) => {
     if (!window.confirm("Are you sure you want to delete this item?")) return;
 
     try {
-      const response = await fetch(`http://localhost:5001/api/items/delete/${itemId}`, {
+      const response = await fetch(`https://my-server-1.eastasia.cloudapp.azure.com/api/items/delete/${itemId}`, {
         method: 'DELETE'
       });
 
@@ -101,7 +101,7 @@ const VendorMenu = ({ user }) => {
 
   const startEditing = (item) => {
     setEditingItem(item);
-    setImagePreview(item.image ? `http://localhost:5001${item.image}` : null);
+    setImagePreview(item.image ? `https://my-server-1.eastasia.cloudapp.azure.com${item.image}` : null);
   };
 
   const cancelEdit = () => {
@@ -179,7 +179,7 @@ const VendorMenu = ({ user }) => {
                 {items.map(item => (
                   <div key={item._id} className="bg-white rounded-2xl p-4 flex items-center gap-4 shadow-sm border border-slate-100 hover:border-orange-200 transition-colors group">
                     <img 
-                      src={item.image ? `http://localhost:5001${item.image}` : 'https://via.placeholder.com/100'} 
+                      src={item.image ? `https://my-server-1.eastasia.cloudapp.azure.com${item.image}` : 'https://via.placeholder.com/100'} 
                       alt={item.name} 
                       className="w-20 h-20 rounded-xl object-cover border border-slate-100"
                     />

@@ -13,7 +13,7 @@ const Profile = ({ user, setUser }) => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await fetch(`http://localhost:5001/api/auth/profile/${userId}`);
+        const response = await fetch(`https://my-server-1.eastasia.cloudapp.azure.com/api/auth/profile/${userId}`);
         if (response.ok) {
           const data = await response.json();
           setFormData({
@@ -31,7 +31,7 @@ const Profile = ({ user, setUser }) => {
 
     const fetchLocations = async () => {
       try {
-        const response = await fetch('http://localhost:5001/api/locations');
+        const response = await fetch('https://my-server-1.eastasia.cloudapp.azure.com/api/locations');
         if (response.ok) setDbLocations(await response.json());
       } catch (err) {
         console.error("Failed to fetch locations:", err);
@@ -49,7 +49,7 @@ const Profile = ({ user, setUser }) => {
     setMessage('');
     
     try {
-      const response = await fetch(`http://localhost:5001/api/auth/profile/${userId}`, {
+      const response = await fetch(`https://my-server-1.eastasia.cloudapp.azure.com/api/auth/profile/${userId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)

@@ -30,7 +30,7 @@ const VendorShopRegistration = ({ userId, onComplete }) => {
     try {
       // NOTE: Do NOT set Content-Type header when sending FormData
       // The browser will automatically set it to multipart/form-data
-      const response = await fetch('http://localhost:5001/api/vendors/register-shop', {
+      const response = await fetch('https://my-server-1.eastasia.cloudapp.azure.com/api/vendors/register-shop', {
         method: 'POST',
         body: formData,
       });
