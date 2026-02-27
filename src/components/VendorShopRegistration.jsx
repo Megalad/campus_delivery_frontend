@@ -32,13 +32,22 @@ const VendorShopRegistration = ({ user, onComplete }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    // 2. Send the shop data to your backend
+    // Safety check: Grab user from props, or fallback to LocalStorage
+    const currentUser = user || JSON.parse(localStorage.getItem('user'));
+
+    if (!currentUser || (!currentUser.id && !currentUser._id)) {
+      alert("Session lost. Please log out and log back in.");
+      return;
+    }
+
+    const finalUserId = currentUser.id || currentUser._id;
+
     try {
       const response = await fetch(`${import.meta.env.VITE_API_URL}/api/vendors`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          userId: user.id, // Assuming you pass the logged-in user object to this component
+          userId: finalUserId, 
           shopName,
           cuisineType,
           locationId
@@ -47,8 +56,8 @@ const VendorShopRegistration = ({ user, onComplete }) => {
 
       if (response.ok) {
         alert("Shop successfully registered!");
-        if (onComplete) onComplete(); // Callback to tell the app the user is fully set up
-        navigate('/vendor'); // Redirect to their new dashboard
+        if (onComplete) onComplete(); 
+        navigate('/vendor'); 
       } else {
         const data = await response.json();
         alert(data.message || "Failed to register shop.");
