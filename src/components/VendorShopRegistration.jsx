@@ -42,16 +42,20 @@ const VendorShopRegistration = ({ user, onComplete }) => {
 
     const finalUserId = currentUser.id || currentUser._id;
 
+    // IMPORTANT: Because backend uses 'multer', we MUST use FormData instead of JSON
+    const formData = new FormData();
+    formData.append('ownerId', finalUserId); // Backend expects 'ownerId'
+    formData.append('shopName', shopName);
+    formData.append('cuisineType', cuisineType);
+    formData.append('locationId', locationId);
+    // Note: We leave 'image' out for now since the backend says 'req.file ? ... : ""'
+
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/vendors`, {
+      // 1. Updated the URL to include /register-shop
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/vendors/register-shop`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          userId: finalUserId, 
-          shopName,
-          cuisineType,
-          locationId
-        })
+        // 2. DO NOT set 'Content-Type'. The browser automatically sets it for FormData!
+        body: formData
       });
 
       if (response.ok) {
@@ -59,8 +63,13 @@ const VendorShopRegistration = ({ user, onComplete }) => {
         if (onComplete) onComplete(); 
         navigate('/vendor'); 
       } else {
-        const data = await response.json();
-        alert(data.message || "Failed to register shop.");
+        const contentType = response.headers.get("content-type");
+        if (contentType && contentType.includes("application/json")) {
+            const data = await response.json();
+            alert(data.message || "Failed to register shop.");
+        } else {
+            alert(`Server Error: The route was not found (${response.status})`);
+        }
       }
     } catch (error) {
       console.error("Error creating shop:", error);
