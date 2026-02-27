@@ -25,16 +25,14 @@ const Login = ({ onSwitch, onLoginSuccess }) => {
         let loggedInUser = data.user;
 
         // NEW: If the user is a vendor, check if they already have a shop created
-        if (loggedInUser.role === 'vendor') {
+        if (loggedInUser.role === 'Vendor' || loggedInUser.role === 'vendor') {
           try {
             const vendorId = loggedInUser.id || loggedInUser._id;
             const shopResponse = await fetch(`${import.meta.env.VITE_API_URL}/api/vendors/my-shop/${vendorId}`);
             
             if (shopResponse.ok) {
-              // The backend found a shop, so we attach a flag to the user object
               loggedInUser.hasShop = true;
             } else {
-              // The backend returned 404 (Shop not found)
               loggedInUser.hasShop = false;
             }
           } catch (shopErr) {
